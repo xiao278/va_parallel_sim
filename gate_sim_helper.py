@@ -33,3 +33,15 @@ def init_qubits(bits:str)->np.ndarray:
         next_bit = gates.Q_0 if bits[i] == '0' else gates.Q_1
         result = tensor_product(result, next_bit)
     return result
+
+def eval_probability(qubit_matrix:np.ndarray, qubits:int)->np.ndarray:
+    assert qubit_matrix.shape[1] == 1
+    possibilities:int = qubit_matrix.shape[0]
+    squared = np.square(qubit_matrix)
+    # print(squared)
+    probabilities = {}
+    for i in range(possibilities):
+        binary:str = ("{0:0%db}"%(qubits)).format(i)
+        if squared[i,0] > 0:
+            probabilities[binary] = squared[i,0]
+    return probabilities
