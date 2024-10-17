@@ -1,32 +1,6 @@
 import numpy as np
 import sympy as sp
-import gate_sim_helper as gsh
-
-X = np.array(
-    [[0,1],
-     [1,0]]
-)
-
-H = np.array(
-    [[1,1],
-     [1,-1]]
-)
-H = H / sp.sqrt(2)
-
-I = np.array(
-    [[1,0],
-     [0,1]]
-)
-
-q_0 = np.array(
-    [[1],
-     [0]]
-)
-
-q_1 = np.array(
-    [[0],
-     [1]]
-)
+import gate_sim_main as gsm
 
 # print(gsh.tensor_product(q_0, q_1))
 #01 becomes 00 because of the X gate on the "2nd" bit
@@ -37,3 +11,8 @@ q_1 = np.array(
 # print(gsh.eval_probability(example,5))
 
 # print(gsh.eval_probability(np.matmul(gsh.cnot_matrix(2,0,3),gsh.init_qubits("001")),3))
+
+qc = gsm.QuantumCircuit("1100")
+qc.apply_simple_gate("H",3)
+qc.apply_cnot_gate(3,0)
+print(qc.get_probabilities())

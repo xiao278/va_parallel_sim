@@ -34,7 +34,7 @@ def init_qubits(bits:str)->np.ndarray:
         result = tensor_product(result, next_bit)
     return result
 
-def eval_probability(qubit_matrix:np.ndarray, qubits:int)->np.ndarray:
+def eval_probability(qubit_matrix:np.ndarray, qubits:int)->dict:
     assert qubit_matrix.shape[1] == 1
     possibilities:int = qubit_matrix.shape[0]
     squared = np.square(qubit_matrix)
