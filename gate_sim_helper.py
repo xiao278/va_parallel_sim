@@ -45,3 +45,31 @@ def eval_probability(qubit_matrix:np.ndarray, qubits:int)->np.ndarray:
         if squared[i,0] > 0:
             probabilities[binary] = squared[i,0]
     return probabilities
+
+def cnot_matrix(ctrl_bit:int, tgt_bit:int, qubits:int) -> np.ndarray:
+    assert ctrl_bit != tgt_bit
+    assert ctrl_bit < qubits
+    assert tgt_bit < qubits
+    mat_size = 2 ** qubits
+    #list of tuple
+    row_swaps = []
+    #interval where the control bit is flipped, last bit is 1, 2nd to last is 2, 3rd to last is 4, 4th to last is 8 etc etc
+    cbit_interval = 2 ** (qubits - ctrl_bit - 1)
+    tbit_interval = 2 ** (qubits - tgt_bit - 1)
+    swapped_rows = set()
+    for r in range(cbit_interval, mat_size, cbit_interval * 2):
+        upper_r = r + cbit_interval
+        for current_row in range(r, upper_r):
+            if current_row in swapped_rows:
+                continue
+            other_row = current_row + tbit_interval
+            row_swaps.append((current_row, other_row))
+            swapped_rows.add(current_row)
+            swapped_rows.add(other_row)
+    mat = np.zeros((mat_size, mat_size), dtype=object)
+    np.fill_diagonal(mat, 1)
+    for swap in row_swaps:
+        row1, row2 = swap
+        mat[[row1,row2]] = mat[[row2,row1]]
+    return mat
+
