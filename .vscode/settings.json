@@ -1,0 +1,5 @@
+{
+    "python.analysis.extraPaths": [
+        "./tensor_method_w2"
+    ]
+}

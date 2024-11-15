@@ -12,7 +12,7 @@ import gate_sim_main as gsm
 
 # print(gsh.eval_probability(np.matmul(gsh.cnot_matrix(2,0,3),gsh.init_qubits("001")),3))
 
-qc = gsm.QuantumCircuit("1100")
+qc = gsm.QuantumCircuit("1001100")
 qc.apply_simple_gate("H",3)
 qc.apply_cnot_gate(3,0)
 print(qc.get_probabilities())
