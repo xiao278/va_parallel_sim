@@ -1,6 +1,7 @@
 import numpy as np
 import sympy as sp
 from gate_sim_gates import *
+from scipy.linalg import expm
 
 class TensorSim:
     def __init__ (self, bit_string:str):
@@ -79,6 +80,7 @@ class TensorSim:
             updated_state = updated_state.reshape(*(2,) * len(gate_indices), *permuted_state.shape[len(gate_indices):])
             updated_state = np.moveaxis(updated_state, used_indices, gate_indices)
             return updated_state * weights
+
         for term in pauli_list:
             term_state = apply_hamiltonian_terms(term)
             new_state += term_state
